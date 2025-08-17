@@ -1,0 +1,6 @@
+<!-- res/drawable/ampm_button_selected.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/purple_accent"/>
+    <corners android:radius="20dp"/>
+</shape>

@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/dark_background"
+    tools:actionBarNavMode="list"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Alarm"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/settings_button"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--                    android:src="@drawable/ic_settings"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    app:tint="@color/white" />-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/info_button"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--                    android:src="@drawable/ic_info"-->
+<!--                    app:tint="@color/white" />-->
+
+
+        </RelativeLayout>
+
+        <!-- Time Picker Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="30dp">
+
+            <!-- Hours Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HOURS"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:id="@+id/hours_display"
+                    android:layout_width="100dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/time_picker_background"
+                    android:gravity="center"
+                    android:text="07"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Separator -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:background="@drawable/dot_white"
+                    android:layout_marginBottom="6dp" />
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="4dp"
+                    android:background="@drawable/dot_white" />
+
+            </LinearLayout>
+
+            <!-- Minutes Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MINUTES"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:id="@+id/minutes_display"
+                    android:layout_width="100dp"
+                    android:layout_height="65dp"
+                    android:background="@drawable/time_picker_background"
+                    android:gravity="center"
+                    android:text="30"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- AM/PM Selector -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <Button
+                    android:id="@+id/am_button"
+                    android:layout_width="50dp"
+                    android:layout_height="32dp"
+                    android:text="AM"
+                    android:textColor="@color/black"
+                    android:background="@drawable/ampm_button_selected"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <Button
+                    android:id="@+id/pm_button"
+                    android:layout_width="50dp"
+                    android:layout_height="32dp"
+                    android:text="PM"
+                    android:textColor="@color/secondary_text"
+                    android:background="@drawable/ampm_button_unselected"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Date Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tomorrow - Mon, 18 Aug"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/calendar_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+
+        <!-- Day of Week Toggles -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/sunday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="S"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_unselected"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/monday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="M"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_selected"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/tuesday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="T"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_selected"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/wednesday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="W"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_selected"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/thursday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="T"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_selected"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/friday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="F"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_selected"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:id="@+id/saturday_toggle"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="S"
+                android:gravity="center"
+                android:background="@drawable/day_toggle_unselected"
+                android:textColor="@color/secondary_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Alarm Name Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alarm Name"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:id="@+id/alarm_name_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Morning Run"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:paddingBottom="6dp"
+                android:background="@drawable/underline_background" />
+
+        </LinearLayout>
+
+        <!-- Toggle Options -->
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+             android:layout_weight="0"
+            android:orientation="vertical">
+
+            <!-- Alarm Sound Toggle -->
+            <LinearLayout
+                android:id="@+id/sound_toggle_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/toggle_row_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_music_note"
+                    app:tint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alarm sound"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sound_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chime Time"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/sound_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:checked="true"
+                    android:theme="@style/PurpleSwitchTheme" />
+
+            </LinearLayout>
+
+            <!-- Vibration Toggle -->
+            <LinearLayout
+                android:id="@+id/vibration_toggle_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/toggle_row_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_vibration"
+                    app:tint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vibration"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vibration_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Basic call"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/vibration_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:checked="true"
+                    android:theme="@style/PurpleSwitchTheme" />
+
+            </LinearLayout>
+
+            <!-- Snooze Toggle -->
+            <LinearLayout
+                android:id="@+id/snooze_toggle_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toggle_row_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_snooze"
+                    app:tint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Snooze"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/snooze_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5 minutes, 3 times"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/snooze_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:checked="true"
+                    android:theme="@style/PurpleSwitchTheme" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+             android:layout_marginBottom="50dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/save_button_background"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,7 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <style name="PurpleSwitchTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/purple_light</item>
+        <item name="android:colorForeground">@color/purple_light</item>
+    </style>
+</resources>

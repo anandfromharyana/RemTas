@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_upcoming"
+        android:icon="@drawable/outline_upcoming_24"
+        android:title="Upcoming" />
+
+    <item
+        android:id="@+id/navigation_alarm"
+        android:icon="@drawable/alarm_add"
+        android:title="Alarm" />
+
+    <item
+        android:id="@+id/navigation_reminder"
+        android:icon="@drawable/add_reminder"
+        android:title="Reminder" />
+
+</menu>

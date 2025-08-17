@@ -1,0 +1,6 @@
+<!-- res/drawable/day_toggle_selected.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/purple_accent"/>
+    <corners android:radius="22dp"/>
+</shape>

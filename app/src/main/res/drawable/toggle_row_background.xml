@@ -1,0 +1,9 @@
+<!-- res/drawable/toggle_row_background.xml -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/purple_accent">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+</ripple>
