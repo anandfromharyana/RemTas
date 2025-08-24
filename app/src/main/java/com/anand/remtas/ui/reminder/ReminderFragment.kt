@@ -8,10 +8,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.anand.remtas.databinding.FragmentAlarmBinding
+import com.anand.remtas.databinding.FragmentReminderBinding
 
 class ReminderFragment : Fragment() {
 
-    private var _binding: FragmentAlarmBinding? = null
+    private var _binding: FragmentReminderBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,7 +26,7 @@ class ReminderFragment : Fragment() {
         val reminderViewModel =
             ViewModelProvider(this).get(ReminderViewModel::class.java)
 
-        _binding = FragmentAlarmBinding.inflate(inflater, container, false)
+        _binding = FragmentReminderBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
 //        val textView: TextView = binding

@@ -76,10 +76,11 @@
                     android:letterSpacing="0.1"
                     android:layout_marginBottom="6dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/hours_display"
                     android:layout_width="100dp"
                     android:layout_height="65dp"
+                    android:autofillHints=""
                     android:background="@drawable/time_picker_background"
                     android:gravity="center"
                     android:text="07"
@@ -127,7 +128,7 @@
                     android:letterSpacing="0.1"
                     android:layout_marginBottom="6dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/minutes_display"
                     android:layout_width="100dp"
                     android:layout_height="65dp"
@@ -180,21 +181,24 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/date_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Tomorrow - Mon, 18 Aug"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/calendar_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_calendar"
                 app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/date_text"
+                android:layout_marginLeft="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=" 18 Aug"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+
 
         </LinearLayout>
 
@@ -299,22 +303,20 @@
             android:layout_marginBottom="20dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alarm Name"
-                android:textColor="@color/secondary_text"
-                android:textSize="12sp"
-                android:layout_marginBottom="6dp" />
+                 android:text="Alarm Name"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/alarm_name_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Morning Run"
+                android:hintTextColor="@color/white"
+                android:hint="Enter the name of Alarm"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:paddingBottom="6dp"
-                android:background="@drawable/underline_background" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -363,13 +365,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/sound_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Chime Time"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -418,13 +413,6 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/vibration_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Basic call"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -472,13 +460,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/snooze_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5 minutes, 3 times"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="14sp" />
+
 
                 </LinearLayout>
 
@@ -495,16 +477,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-             android:layout_marginBottom="50dp"
+            android:layout_marginTop="30dp"
             android:gravity="center">
 
             <Button
                 android:id="@+id/cancel_button"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Cancel"
                 android:textColor="@color/white"
@@ -515,10 +498,9 @@
 
             <Button
                 android:id="@+id/save_button"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:text="Save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 android:text="Save"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"

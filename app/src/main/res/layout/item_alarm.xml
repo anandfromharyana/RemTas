@@ -1,15 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="12dp">
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/dark_background"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <TextView
-        android:id="@+id/textAlarmTime"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="07:30"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header with time and toggle switch -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/textAlarmTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="07:30"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/alarmToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:theme="@style/PurpleSwitchTheme" />
+
+        </LinearLayout>
+
+        <!-- Alarm name -->
+        <TextView
+            android:id="@+id/textAlarmName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Morning Run"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Days/Date -->
+        <TextView
+            android:id="@+id/textAlarmDays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Days: Mon, Tue, Wed, Thu, Fri"
+            android:textColor="@color/secondary_text"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Settings status row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textSound"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sound: On"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                android:drawablePadding="4dp"
+                app:drawableStartCompat="@drawable/ic_music_note"
+                app:drawableTint="@color/secondary_text" />
+
+            <TextView
+                android:id="@+id/textVibration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vibration: On"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                android:drawablePadding="4dp"
+                app:drawableStartCompat="@drawable/ic_vibration"
+                app:drawableTint="@color/secondary_text" />
+
+            <TextView
+                android:id="@+id/textSnooze"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Snooze: On"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp"
+                android:drawablePadding="4dp"
+                app:drawableStartCompat="@drawable/ic_snooze"
+                app:drawableTint="@color/secondary_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
