@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anand.remtas.databinding.ItemAlarmBinding
 import com.anand.remtas.ui.localDB.AlarmEntity
- import java.text.SimpleDateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
@@ -117,16 +117,23 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.AlarmViewHolder>() {
     }
 
     private fun formatSelectedDays(selectedDays: String): String {
+        if (selectedDays.isEmpty()) return "None"
+
         val dayMap = mapOf(
             0 to "Sun", 1 to "Mon", 2 to "Tue", 3 to "Wed",
             4 to "Thu", 5 to "Fri", 6 to "Sat"
         )
 
-        return selectedDays.split(",")
+        val days = selectedDays.split(",")
             .mapNotNull { it.toIntOrNull() }
             .sorted()
-            .mapNotNull { dayMap[it] }
-            .joinToString(", ")
+
+        return when {
+            days.size == 7 -> "Everyday"
+            days == listOf(1, 2, 3, 4, 5) -> "Weekdays"
+            days == listOf(0, 6) -> "Weekends"
+            else -> days.mapNotNull { dayMap[it] }.joinToString(", ")
+        }
     }
 
     private fun isSameDay(date1: Calendar, date2: Calendar): Boolean {

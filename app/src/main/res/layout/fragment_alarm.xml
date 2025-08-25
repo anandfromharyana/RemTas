@@ -313,8 +313,7 @@
                 android:id="@+id/alarm_name_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hintTextColor="@color/white"
-                android:hint="Enter the name of Alarm"
+                 android:hint="Enter the name of Alarm"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 

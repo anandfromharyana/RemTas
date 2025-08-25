@@ -4,68 +4,141 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.anand.remtas.ui.localDB.AlarmDatabase
 import com.anand.remtas.ui.localDB.AlarmEntity
+import com.anand.remtas.ui.localDB.AppDatabase
+import com.anand.remtas.ui.localDB.Reminder
+import com.anand.remtas.ui.localDB.ReminderRepository
 import kotlinx.coroutines.launch
 
 class UpcomingViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val dao = AlarmDatabase.getDatabase(application).alarmDao()
+    // Alarm Database
+    private val alarmDao = AlarmDatabase.getDatabase(application).alarmDao()
 
-    // Expose alarms list as LiveData (auto updates UI when DB changes)
-    val alarms: LiveData<List<AlarmEntity>> = dao.getAllAlarms()
+    // Reminder Database
+    private val reminderDao = AppDatabase.getDatabase(application).reminderDao()
+    private val reminderRepository = ReminderRepository(reminderDao)
 
-    // Get only enabled alarms using MediatorLiveData
-    private val _enabledAlarms = MediatorLiveData<List<AlarmEntity>>()
-    val enabledAlarms: LiveData<List<AlarmEntity>> = _enabledAlarms
+    // Original alarm data
+    val alarms: LiveData<List<AlarmEntity>> = alarmDao.getAllAlarms()
+    val enabledAlarms: LiveData<List<AlarmEntity>> = alarmDao.getAllAlarms().map { alarms ->
+        alarms.filter { it.isEnabled }
+    }
 
-    // Get upcoming alarms (sorted by time) using MediatorLiveData
-    private val _upcomingAlarms = MediatorLiveData<List<AlarmEntity>>()
-    val upcomingAlarms: LiveData<List<AlarmEntity>> = _upcomingAlarms
+    // Reminder data
+    val upcomingReminders: LiveData<List<Reminder>> = reminderRepository.getUpcomingReminders()
+
+    // Combined upcoming items
+    private val _upcomingItems = MediatorLiveData<List<UpcomingItem>>()
+    val upcomingItems: LiveData<List<UpcomingItem>> = _upcomingItems
 
     init {
-        // Set up MediatorLiveData sources
-        _enabledAlarms.addSource(alarms) { alarmList ->
-            _enabledAlarms.value = alarmList.filter { it.isEnabled }
+        setupCombinedData()
+    }
+
+    private fun setupCombinedData() {
+        _upcomingItems.addSource(alarms) {
+            combineData()
+        }
+        _upcomingItems.addSource(upcomingReminders) {
+            combineData()
+        }
+    }
+
+    private fun combineData() {
+        val alarmList = alarms.value ?: emptyList()
+        val reminderList = upcomingReminders.value ?: emptyList()
+
+        val combinedList = mutableListOf<UpcomingItem>()
+
+        // Add alarms
+        alarmList.forEach { alarm ->
+            combinedList.add(UpcomingItem.AlarmItem(alarm))
         }
 
-        _upcomingAlarms.addSource(alarms) { alarmList ->
-            _upcomingAlarms.value = alarmList.sortedBy { alarm ->
-                // Convert time string to comparable format for sorting
-                val timeParts = alarm.time.split(":")
-                val hour = timeParts[0].toIntOrNull() ?: 0
-                val minute = timeParts[1].toIntOrNull() ?: 0
-                hour * 60 + minute // Convert to minutes for easy sorting
+        // Add reminders
+        reminderList.forEach { reminder ->
+            combinedList.add(UpcomingItem.ReminderItem(reminder))
+        }
+
+        // Sort by time (earliest first)
+        val sortedList = combinedList.sortedWith { item1, item2 ->
+            when {
+                item1 is UpcomingItem.ReminderItem && item2 is UpcomingItem.AlarmItem -> {
+                    // For reminders vs alarms, compare actual datetime with today's alarm time
+                    val reminderTime = item1.reminder.dateTime.time
+                    val todayCalendar = java.util.Calendar.getInstance()
+                    val alarmTimeParts = item2.alarm.time.split(":")
+                    todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, alarmTimeParts[0].toInt())
+                    todayCalendar.set(java.util.Calendar.MINUTE, alarmTimeParts[1].toInt())
+                    todayCalendar.set(java.util.Calendar.SECOND, 0)
+                    todayCalendar.set(java.util.Calendar.MILLISECOND, 0)
+
+                    reminderTime.compareTo(todayCalendar.timeInMillis)
+                }
+                item1 is UpcomingItem.AlarmItem && item2 is UpcomingItem.ReminderItem -> {
+                    // For alarms vs reminders
+                    val todayCalendar = java.util.Calendar.getInstance()
+                    val alarmTimeParts = item1.alarm.time.split(":")
+                    todayCalendar.set(java.util.Calendar.HOUR_OF_DAY, alarmTimeParts[0].toInt())
+                    todayCalendar.set(java.util.Calendar.MINUTE, alarmTimeParts[1].toInt())
+                    todayCalendar.set(java.util.Calendar.SECOND, 0)
+                    todayCalendar.set(java.util.Calendar.MILLISECOND, 0)
+
+                    val reminderTime = item2.reminder.dateTime.time
+                    todayCalendar.timeInMillis.compareTo(reminderTime)
+                }
+                item1 is UpcomingItem.AlarmItem && item2 is UpcomingItem.AlarmItem -> {
+                    // Compare alarm times
+                    item1.sortTime.compareTo(item2.sortTime)
+                }
+                item1 is UpcomingItem.ReminderItem && item2 is UpcomingItem.ReminderItem -> {
+                    // Compare reminder times
+                    item1.reminder.dateTime.compareTo(item2.reminder.dateTime)
+                }
+                else -> 0
             }
         }
+
+        _upcomingItems.value = sortedList
     }
 
-    // Update an existing alarm
+    // Alarm operations
     fun updateAlarm(alarm: AlarmEntity) {
         viewModelScope.launch {
-            dao.update(alarm)
+            alarmDao.update(alarm)
         }
     }
 
-    // Delete an alarm
     fun deleteAlarm(alarm: AlarmEntity) {
         viewModelScope.launch {
-            dao.delete(alarm)
+            alarmDao.delete(alarm)
         }
     }
 
-    // Toggle alarm enabled/disabled
     fun toggleAlarm(alarm: AlarmEntity, isEnabled: Boolean) {
         viewModelScope.launch {
             val updatedAlarm = alarm.copy(isEnabled = isEnabled)
-            dao.update(updatedAlarm)
+            alarmDao.update(updatedAlarm)
         }
     }
 
-    // Get count of active alarms using MediatorLiveData
-    private val _activeAlarmCount = MediatorLiveData<Int>()
-    fun getActiveAlarmCount(): LiveData<Int> {
-        _activeAlarmCount.addSource(alarms) { alarmList ->
-            _activeAlarmCount.value = alarmList.count { it.isEnabled }
+    // Reminder operations
+    fun updateReminderStatus(reminder: Reminder, isCompleted: Boolean) {
+        viewModelScope.launch {
+            reminderRepository.updateReminderStatus(reminder.id, isCompleted)
         }
-        return _activeAlarmCount
+    }
+
+    fun deleteReminder(reminder: Reminder) {
+        viewModelScope.launch {
+            reminderRepository.deleteReminder(reminder)
+        }
+    }
+
+    // Get count of active items
+    fun getActiveItemCount(): LiveData<Int> {
+        return upcomingItems.map { items ->
+            items.count { it.isEnabled }
+        }
     }
 }

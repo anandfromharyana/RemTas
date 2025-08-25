@@ -3,11 +3,18 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
+    // ❌ REMOVE: id("androidx.room") version "2.6.1"
+    // ❌ REMOVE: kotlin("kapt") - not needed with KSP
 }
+
+// ❌ REMOVE this entire room block - it's causing the conflict
+// room {
+//     schemaDirectory("$projectDir/schemas")
+// }
 
 android {
     namespace = "com.anand.remtas"
-    compileSdk = 34   // ✅ Kotlin DSL uses compileSdk
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.anand.remtas"
@@ -17,6 +24,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // ✅ Add KSP arguments for Room schema location
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+            arg("room.incremental", "true")
+            arg("room.expandProjection", "true")
+        }
     }
 
     buildTypes {
@@ -66,7 +80,7 @@ dependencies {
     // Room Database
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1") // ✅ Only KSP, no kapt
 
     // Media (to play alarm sounds)
     implementation("androidx.media:media:1.7.0")

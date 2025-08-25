@@ -13,5 +13,8 @@ data class AlarmEntity(
     val vibrationEnabled: Boolean,
     val snoozeEnabled: Boolean,
     val date: String? = null, // Optional date field for specific date alarms
-    val isEnabled: Boolean = true // Whether the alarm is active/enabled
+    val isEnabled: Boolean = true
+
+    //,// Whether the alarm is active/enabled
+  //  val soundUri: String? = null   // path of selected sound (RingtoneManager or custom file)
 )

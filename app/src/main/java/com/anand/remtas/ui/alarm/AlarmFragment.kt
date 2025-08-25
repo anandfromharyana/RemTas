@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.anand.remtas.R
 import com.anand.remtas.databinding.FragmentAlarmBinding
 import com.anand.remtas.ui.localDB.AlarmEntity
@@ -263,6 +264,8 @@ class AlarmFragment : Fragment() {
         }
     }
 
+    
+
     private fun updateAmPmButtons() {
         if (isAM) {
             binding.amButton.background =
@@ -428,7 +431,6 @@ class AlarmFragment : Fragment() {
     }
 
     private fun saveAlarm() {
-        // Validate time inputs before saving
         validateAndUpdateHour()
         validateAndUpdateMinute()
 
@@ -443,7 +445,7 @@ class AlarmFragment : Fragment() {
             id = if (isEditMode) editingAlarmId else 0,
             time = timeString,
             name = binding.alarmNameDisplay.text.toString(),
-            selectedDays = selectedDays.joinToString(","), // stored as comma string
+            selectedDays = selectedDays.joinToString(","),
             soundEnabled = binding.soundSwitch.isChecked,
             vibrationEnabled = binding.vibrationSwitch.isChecked,
             snoozeEnabled = binding.snoozeSwitch.isChecked,
@@ -456,7 +458,8 @@ class AlarmFragment : Fragment() {
         } else {
             viewModel.addAlarm(alarm)
         }
-        requireActivity().onBackPressed()
+
+         findNavController().navigate(R.id.navigation_upcoming)
     }
 
     override fun onDestroyView() {
